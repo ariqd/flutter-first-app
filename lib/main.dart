@@ -29,9 +29,18 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     var questions = [
-      'What\'s your favorite color?',
-      'What\'s your favorite animal?',
-      'What\'s your favorite car?',
+      {
+        'questionText': 'What\'s your favorite color?',
+        'answers': ['Black', 'Red', 'Green', 'White'],
+      },
+      {
+        'questionText': 'What\'s your favorite animal?',
+        'answers': ['Rabbit', 'Snake', 'Elephant', 'Lion'],
+      },
+      {
+        'questionText': 'What\'s your favorite car?',
+        'answers': ['Toyota', 'Honda', 'Ferrari', 'Lamborghini'],
+      },
     ];
 
     return MaterialApp(
@@ -40,11 +49,13 @@ class _MyAppState extends State<MyApp> {
           title: Text('My First App'),
         ),
         body: Column(
-          children: <Widget>[
-            Question(questions[_questionIndex]),
-            Answer(_answerQuestion),
-            Answer(_answerQuestion),
-            Answer(_answerQuestion),
+          children: [
+            Question(questions[_questionIndex]['questionText']),
+            ...(questions[_questionIndex]['answers'] as List<String>)
+                .map(
+                  (answer) => Answer(_answerQuestion, answer),
+                )
+                .toList(),
           ],
         ),
       ),
